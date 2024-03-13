@@ -31,13 +31,15 @@ public class Grades {
        5. Fix the issue.
        6. Transform the algorithm to <strong>use</strong> the generic one from Algorithms.java, as instructed in the readme file.
       */
-      int i = 0;
-      while (i <= grades.length/2) {
+      /*int i = 0;*/
+      if (grades != null && grades.length != 0)
+      {
+      for ( int i=0; i < grades.length/2; i++) {
          int temp = grades[i];
          grades[i] = grades[grades.length-i-1];
          grades[grades.length-i-1] = temp;
-         i++;
      }
+   }
    }
 
    /**
@@ -53,15 +55,27 @@ public class Grades {
        6. Transform the algorithm to <strong>use</strong> the generic one from Algorithms.java as instructed in the readme file.
       */
       int i = grades.length-1;
-      while (i > 0) {
+      if (grades != null && grades.length != 0){
+      for (int j=0; j<i; j++){
+         for (int k=0; k<i; k++){
+            if(grades[k]>grades[k+1]){
+               int tmp = grades[k];
+               grades[k] = grades[k+1];
+               grades[k+1] = tmp;
+            }
+         }
+      }
+   }
+   }
+      /*while (i > 0){
          if (grades[i] < grades[i-1]) {
             int tmp = grades[i];
             grades[i] = grades[i-1];
             grades[i-1] = tmp;
          }
-         i--;
-      }
-   }
+      } 
+   }/* */
+
 
    /**
     * Returns the plain Java int [] array for investigation.
