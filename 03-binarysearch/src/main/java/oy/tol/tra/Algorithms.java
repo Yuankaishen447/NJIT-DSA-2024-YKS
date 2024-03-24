@@ -32,7 +32,7 @@ public class Algorithms {
         int middle;
         while(fromIndex<=toIndex){
             middle=fromIndex+(toIndex-fromIndex)/2;
-            if(aValue.compareTo(fromArray[middle])>0){
+            if( aValue.compareTo(fromArray[middle])>0 ){
                 fromIndex=middle+1;
             }else if(aValue.compareTo(fromArray[middle])<0){
                 toIndex=middle-1;
