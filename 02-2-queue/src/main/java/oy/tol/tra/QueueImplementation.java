@@ -23,6 +23,10 @@ public class QueueImplementation<E> implements QueueInterface<E>{
         try{
            itemArray = new Object[capacity];
            this.capacity=capacity;
+           size=0;
+           head=0;
+           tail=0;
+           // change: initialize the size, tail and head
         }catch (OutOfMemoryError e){
            throw new QueueAllocationException("Fail to allocate more room for the queue");
         }
@@ -43,22 +47,35 @@ public class QueueImplementation<E> implements QueueInterface<E>{
            try{
               int newCapacity = 2*capacity;
               Object [] newArray = new Object[newCapacity];
-              for (int i=0; i<capacity; i++){
-                 newArray[i] = itemArray[i];
+              int i = 0;
+               //change: make a space for me to put the element into the new array
+               while (i<size){
+                  //change: If the index is smaller than capacity, use it directly.
+                  if (head+i<capacity){
+                      newArray[i] = itemArray[head+i];
+                  }else {
+                      newArray[i] = itemArray[i-(capacity-head)];
+                      //change: I find that the index could not be used and I recaculate it as (i-(capacity-head))
+                  }
+                  i++;
               }
               itemArray = newArray;
               capacity = newCapacity;
+              //change: The header changes to 0
+              head = 0;
+              //change: Tail is size
+              tail = size;
            }catch(OutOfMemoryError e){
               throw new QueueAllocationException("Fail to allocate more room for the queue");
            }
          }
-         
          itemArray[tail] = element;
-          tail++; 
          if(head==capacity-1){
             tail = 0;}
+            else{
+               tail++;
+            }
             size++;
-         
       } 
     
      @SuppressWarnings("unchecked")
@@ -68,6 +85,7 @@ public class QueueImplementation<E> implements QueueInterface<E>{
            throw new QueueIsEmptyException("the queue cannnot be empty") ;
         }
         Object dequeueElement = itemArray[head];
+        itemArray[head] = null; //change: set the dequeue element null
         head++;
        if(head>=capacity){
             head = 0;
