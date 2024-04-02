@@ -44,20 +44,28 @@ public class Algorithms {
     }
 
     
+    public static <T>void swap(T[] array,int index1,int index2){
+        T temp=array[index1];
+        array[index1]=array[index2];
+        array[index2]=temp;
+    }//change: build a method for the swap function
+
     private static <E extends Comparable<E>> int partition(E [] array, int begin, int end) {
         E benchmark=array[begin];
         int left=begin;
         int right=end;
-        if (left!=right) {
-           if((left<right)&&array[right].compareTo(benchmark)>0) {
+        while (left!=right) {//change: I should not use if beause the loop should make a mistake and if I use while，the loop will run while the condition is true
+           while((left<right)&&array[right].compareTo(benchmark)>0) {//change: while the right number is bigger than the pivot, minus the index to find a smaller one
                 right--;
             }
-           if((left<right)&&array[left].compareTo(benchmark)<=0) {
+           while((left<right)&&array[left].compareTo(benchmark)<=0) {//change: while the left number is smaller than the pivot, increase the index to find a bigger one
                 left++;
             }
-            array[left]=array[right];
+            if(left<right){//change: if the index does not cross, swap that two
+                swap(array, left, right);
             }
-        array[begin]=array[left];
+            }
+        array[begin]=array[left];//change: than restart a new one
         array[left]=benchmark ;
         return left;
     }
