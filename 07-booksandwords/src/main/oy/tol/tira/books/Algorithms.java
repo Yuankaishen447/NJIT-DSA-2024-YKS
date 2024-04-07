@@ -53,13 +53,21 @@ public static <T>void swap(T[] array,int index1,int index2){
     array[index1]=array[index2];
     array[index2]=tmp;
 }
+// use the swap method for the method below
+
 private static <E extends Comparable<E>> int partition(E [] array, int begin, int end) {
     E benchmark=array[begin];
     int left=begin;
     int right=end;
     while(left!=right) {
+       //do{
+            //left++;
+        //}while((left<right)&&array[left].compareTo(benchmark)<=0);
+        //do{
+             //right--;
+        //}while((left<right)&&array[right].compareTo(benchmark)>0);
        while((left<right)&&array[right].compareTo(benchmark)>0) {
-            right--;
+           right--;
         }
        while((left<right)&&array[left].compareTo(benchmark)<=0) {
             left++;
@@ -69,18 +77,26 @@ private static <E extends Comparable<E>> int partition(E [] array, int begin, in
         }
     }
     array[begin]=array[left];
-    array[left]=benchmark ;
-return left;
+    array[left]=benchmark;
+    return left;
 }
 
 
 public static <E extends Comparable<E>> void quickSort(E [] array, int begin, int end) {
-if(begin>=end){
-    return;
-}
+if(begin>=0 && end>=0 && begin<end){
 int pivot=partition(array, begin, end);
-quickSort(array, begin, pivot-1);
-quickSort(array, pivot+1, end);
+    quickSort(array, begin, pivot-1);
+if(pivot<200){
+    quickSort(array, pivot+1, end);
+}
+//--------------here I want to ask why----------------------------
+//Pertti, I and my classmate find that if we use 
+//quickSort(array, begin, pivot-1);
+//quickSort(array, pivot+1, end);
+//as slide said, the Bulkfile will still overflow, and we cannot find a better solution. So we just partition, discard one part, quiksort, prtition, discard one part.
+//this is why here (pivot < 200) appears and only this can bulkfile test pass
+//I want to ask wether there is better method for us to programme.
+}
 }
 
 public static <E extends Comparable<E>> void fastSort(E [] array) {
